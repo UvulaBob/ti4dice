@@ -11,7 +11,7 @@ class ResultItem extends Component {
         const rollResults = [];
         for (let i = this.shipCount; i > 0; i-- ) {
             for (let j = this.numberOfDice; j > 0; j--) {
-                rollResults.push(<RollResult target={this.target} />)
+                rollResults.push(<RollResult key={rollResults.length - 1} target={this.target} />)
             }
         }
         return rollResults;
@@ -20,17 +20,11 @@ class ResultItem extends Component {
     render() {
         return (
             <Fragment>
-                <div className="row justify-content-center">
                     <h3><u>{this.friendlyName + "s"}</u></h3>
-                </div>
-                <div className="row justify-content-center">
                     <h6>(Target: {this.target})</h6>
-                </div>
-                <div className="row justify-content-center">
                     <ul style={{listStyleType:"none", padding:"0"}}>
                         {this.createRollResults()}
                     </ul>
-                </div>
             </Fragment>
         );
     }

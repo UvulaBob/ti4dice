@@ -7,7 +7,7 @@ class ShipButton extends Component {
     render() {
         return (
             <Fragment>
-                <button type="button" className="btn btn-light border shipSelectionButton" name={this.shipName} onClick={this.props.onClick}>
+                <button type="button" disabled={this.props.disabled} className="btn btn-light border shipSelectionButton" name={this.shipName} onClick={this.props.onClick}>
                     {this.friendlyName}
                 </button>
             </Fragment>
