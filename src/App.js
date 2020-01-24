@@ -18,10 +18,17 @@ class App extends Component {
     };
 
     handleShipButtonClick = (e) => {
+        if (this.state.combatStarted) {
+            return;
+        }
         const shipName = e.target.name;
         const newState = Object.assign({}, this.state);
         newState.fleet[shipName].push(ShipDefinitions[shipName]);
         this.setState(newState);
+    };
+
+    handleRollDiceButtonClick = (e) => {
+        this.setState({combatStarted: true});
     };
 
     render() {
@@ -64,7 +71,7 @@ class App extends Component {
                         </ul>
                     </div>
                     <div className="row justify-content-center">
-                        <button type="button" className="btn btn-success border" onClick={() => this.setState({combatStarted: true})}>Roll Dice</button>
+                        <button type="button" className="btn btn-success border" disabled={this.state.combatStarted} onClick={this.handleRollDiceButtonClick}>Roll Dice</button>
                     </div>
                     <div className="row justify-content-center">
                         <h1><u>Results</u></h1>

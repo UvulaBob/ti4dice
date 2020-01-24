@@ -5,11 +5,14 @@ class ResultItem extends Component {
     friendlyName = this.props.ship.friendlyName;
     target = this.props.ship.target;
     shipCount = this.props.shipCount;
+    numberOfDice = this.props.ship.numberOfDice;
 
     createRollResults() {
         const rollResults = [];
         for (let i = this.shipCount; i > 0; i-- ) {
-            rollResults.push(<RollResult target={this.target} />)
+            for (let j = this.numberOfDice; j > 0; j--) {
+                rollResults.push(<RollResult target={this.target} />)
+            }
         }
         return rollResults;
     }
