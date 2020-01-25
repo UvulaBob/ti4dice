@@ -3,6 +3,7 @@ import ShipButton from './components/ShipButton';
 import FleetItem from './components/FleetItem';
 import ResultItem from './components/ResultItem';
 import ShipDefinitions from './lib/ShipDefinitions';
+import ModifierCheckbox from './components/ModifierCheckbox';
 
 class App extends Component {
     state = {
@@ -17,6 +18,17 @@ class App extends Component {
         combatStarted: false
     };
 
+    activeModifierIds = [];
+
+    handleModifierCheckboxChange = (e) => {
+        if (this.activeModifierIds.includes(e.target.id)) {
+            this.activeModifierIds = this.activeModifierIds.filter((activeModifier) => { return activeModifier !== e.target.id});
+        } else {
+            this.activeModifierIds.push(e.target.id);
+        }
+    };
+
+
     handleShipButtonClick = (e) => {
         if (this.state.combatStarted) {
             return;
@@ -27,7 +39,7 @@ class App extends Component {
         this.setState(newState);
     };
 
-    handleRollDiceButtonClick = (e) => {
+    handleRollDiceButtonClick = () => {
         this.setState({combatStarted: true});
     };
 
@@ -37,14 +49,14 @@ class App extends Component {
             for (let shipType in this.state.fleet) {
                 const shipCount = this.state.fleet[shipType].length;
                 if (shipCount > 0) {
-                    resultItems.push(<ResultItem key={resultItems.length - 1 } ship={ShipDefinitions[shipType]} shipCount={shipCount} />);
+                    resultItems.push(<ResultItem key={resultItems.length - 1}  activeModifierIds={this.activeModifierIds} ship={ShipDefinitions[shipType]} shipCount={shipCount} />);
                 }
             }
         }
 
         const shipButtons = [];
         for (let shipType in this.state.fleet) {
-            shipButtons.push(<ShipButton key={shipType + "_button"}disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
+            shipButtons.push(<ShipButton key={shipType + "_button"} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
         }
 
         return (
@@ -57,7 +69,7 @@ class App extends Component {
                     <div className="row">
                         <div className="col border">
                             <div className="row">
-                                <h2><u>Your Fleet</u></h2>
+                                <h1><u>Fleet</u></h1>
                             </div>
                             <div className="row">
                                 {shipButtons}
@@ -71,9 +83,6 @@ class App extends Component {
                                     <FleetItem ship={ShipDefinitions["fighter"]} shipCount={this.state.fleet.fighter.length}/>
                                     <FleetItem ship={ShipDefinitions["warsun"]} shipCount={this.state.fleet.warsun.length}/>
                                 </ul>
-                            </div>
-                            <div className="row">
-                                <button type="button" className="btn btn-success border" disabled={this.state.combatStarted} onClick={this.handleRollDiceButtonClick}>Roll Dice</button>
                             </div>
                         </div>
                         <div className="col border">
@@ -90,87 +99,20 @@ class App extends Component {
                             <div className="row">
                                 <h1><u>Modifiers</u></h1>
                             </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="upgradedCruisers" />
-                                    <label className="form-check-label" htmlFor="upgradedCruisers">
-                                        Upgraded Cruisers
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="upgradedDestroyers" />
-                                    <label className="form-check-label" htmlFor="upgradedDestroyers">
-                                        Upgraded Destroyers
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="upgradedFighters" />
-                                    <label className="form-check-label" htmlFor="upgradedFighters">
-                                        Upgraded Fighters
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="l1z1xDreadnought" />
-                                    <label className="form-check-label" htmlFor="l1z1xDreadnought">
-                                        L1Z1X: Super Dreadnought II
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="naaluCrystalFighter1" />
-                                    <label className="form-check-label" htmlFor="naaluCrystalFighter1">
-                                        Naalu: Crystal Fighter I
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="naaluCrystalFighter2" />
-                                    <label className="form-check-label" htmlFor="naaluCrystalFighter2">
-                                        Naalu: Crystal Fighter II
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="jolNarFragile" />
-                                    <label className="form-check-label" htmlFor="jolNarFragile">
-                                        Jol-Nar: Fragile
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="sardakkUnrelenting" />
-                                    <label className="form-check-label" htmlFor="sardakkUnrelenting">
-                                        Sardakk N'orr: Unrelenting
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="fighterPrototype" />
-                                    <label className="form-check-label" htmlFor="fighterPrototype">
-                                        Fighter Prototype
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="form-check">
-                                    <input type="checkbox" className="form-check-input" id="moraleBoost" />
-                                    <label className="form-check-label" htmlFor="moraleBoost">
-                                        Morale Boost
-                                    </label>
-                                </div>
-                            </div>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="upgradedCruisers" friendlyText="Upgraded Cruisers" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="upgradedDestroyers" friendlyText="Upgraded Destroyers" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="upgradedFighters" friendlyText="Upgraded Fighters" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="moraleBoost" friendlyText="Morale Boost" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="fighterPrototype" friendlyText="Fighter Prototype" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="l1z1xDreadnought" friendlyText="L1Z1X: Super Dreadnought II" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="naaluCrystalFighter1" friendlyText="Naalu: Crystal Fighter I" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="naaluCrystalFighter2" friendlyText="Naalu: Crystal Fighter II" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="sardakkUnrelenting" friendlyText="Sardakk N'orr: Unrelenting" modifier="+1"/>
+                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="jolNarFragile" friendlyText="Jol-Nar: Fragile" modifier="-1"/>
                         </div>
+                    </div>
+                    <div className="row justify-content-center">
+                        <button type="button" className="btn btn-success border" disabled={this.state.combatStarted} onClick={this.handleRollDiceButtonClick}>Roll Dice</button>
                     </div>
                 </div>
             </div>
