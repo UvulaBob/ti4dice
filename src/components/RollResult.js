@@ -9,19 +9,15 @@ class RollResult extends Component {
 
 
     render() {
-        if (this.result > 10) {
-            this.result = 10;
-        }
-
-        if (this.result < 1) {
-            this.result = 1;
-        }
+        this.result = this.result > 10 ? 10 : this.result;
+        this.result = this.result < 1 ? 1 : this.result;
 
         return (
             <Fragment>
                 <li>Roll: ({this.dieRoll})
                     Modifier: ({this.totalModifier > 0 ? "+" : ""}{this.totalModifier})
-                    Total: ({this.result})- {[this.hit ? "HIT" : "MISS"]}</li>
+                    Total: ({this.result})
+                    Result: {[this.hit ? "HIT" : "MISS"]}</li>
             </Fragment>
         );
     }

@@ -4,6 +4,7 @@ import FleetItem from './components/FleetItem';
 import ResultItem from './components/ResultItem';
 import ShipDefinitions from './lib/ShipDefinitions';
 import ModifierCheckbox from './components/ModifierCheckbox';
+import ModifierDefinitions from './lib/ModifierDefinitions';
 
 class App extends Component {
     state = {
@@ -56,7 +57,17 @@ class App extends Component {
 
         const shipButtons = [];
         for (let shipType in this.state.fleet) {
-            shipButtons.push(<ShipButton key={shipType + "_button"} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
+            shipButtons.push(<ShipButton key={shipType} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
+        }
+
+        const modifierCheckboxes = [];
+        for (let modifierId in ModifierDefinitions) {
+            modifierCheckboxes.push(<ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} modifierId={modifierId}/>);
+        }
+
+        const fleetItems = [];
+        for (let shipType in this.state.fleet) {
+            fleetItems.push(<FleetItem key={shipType} ship={ShipDefinitions[shipType]} shipCount={this.state.fleet.carrier.length}/>);
         }
 
         return (
@@ -76,12 +87,7 @@ class App extends Component {
                             </div>
                             <div className="row">
                                 <ul style={{listStyleType:"none", margin:"0", padding:"0"}}>
-                                    <FleetItem ship={ShipDefinitions["carrier"]} shipCount={this.state.fleet.carrier.length}/>
-                                    <FleetItem ship={ShipDefinitions["cruiser"]} shipCount={this.state.fleet.cruiser.length}/>
-                                    <FleetItem ship={ShipDefinitions["destroyer"]} shipCount={this.state.fleet.destroyer.length}/>
-                                    <FleetItem ship={ShipDefinitions["dreadnought"]} shipCount={this.state.fleet.dreadnought.length}/>
-                                    <FleetItem ship={ShipDefinitions["fighter"]} shipCount={this.state.fleet.fighter.length}/>
-                                    <FleetItem ship={ShipDefinitions["warsun"]} shipCount={this.state.fleet.warsun.length}/>
+                                    {fleetItems}
                                 </ul>
                             </div>
                         </div>
@@ -99,16 +105,7 @@ class App extends Component {
                             <div className="row">
                                 <h1><u>Modifiers</u></h1>
                             </div>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="upgradedCruisers" friendlyText="Upgraded Cruisers" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="upgradedDestroyers" friendlyText="Upgraded Destroyers" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="upgradedFighters" friendlyText="Upgraded Fighters" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="moraleBoost" friendlyText="Morale Boost" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="fighterPrototype" friendlyText="Fighter Prototype" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="l1z1xDreadnought" friendlyText="L1Z1X: Super Dreadnought II" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="naaluCrystalFighter1" friendlyText="Naalu: Crystal Fighter I" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="naaluCrystalFighter2" friendlyText="Naalu: Crystal Fighter II" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="sardakkUnrelenting" friendlyText="Sardakk N'orr: Unrelenting" modifier="+1"/>
-                            <ModifierCheckbox onChange={this.handleModifierCheckboxChange} id="jolNarFragile" friendlyText="Jol-Nar: Fragile" modifier="-1"/>
+                            {modifierCheckboxes}
                         </div>
                     </div>
                     <div className="row justify-content-center">

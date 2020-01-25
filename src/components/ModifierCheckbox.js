@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import ModifierDefinitions from '../lib/ModifierDefinitions';
 
 class ModifierCheckbox extends Component {
-    id = this.props.id;
-    friendlyText = this.props.friendlyText;
-    modifier = this.props.modifier;
-    color = this.modifier === "+1" ? "green" : "red";
+    modifier = ModifierDefinitions[this.props.modifierId];
+    friendlyName = this.modifier.friendlyName;
+    modifierValue = this.modifier.value === 1 ? "+1" : "-1";
+    color = this.modifier.value === 1 ? "green" : "red";
 
     render() {
         return (
@@ -12,7 +13,7 @@ class ModifierCheckbox extends Component {
                 <div className="form-check">
                     <input onChange={this.props.onChange} type="checkbox" className="form-check-input" id={this.id} />
                     <label className="form-check-label" htmlFor={this.id}>
-                        {this.friendlyText}  <b><span style={{color: this.color}}>({this.modifier})</span></b>
+                        {this.friendlyName}  <b><span style={{color: this.color}}>({this.modifierValue})</span></b>
                     </label>
                 </div>
             </div>
