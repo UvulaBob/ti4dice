@@ -8,7 +8,6 @@ class ResultItem extends Component {
     target = this.props.ship.target;
     shipCount = this.props.shipCount;
     numberOfDice = this.props.ship.numberOfDice;
-    activeModifierIds = this.props.activeModifierIds;
     totalModifier = 0;
 
     createRollResults() {
@@ -22,20 +21,32 @@ class ResultItem extends Component {
     }
 
     render() {
-        this.activeModifierIds.forEach( (activeModifierId) => {
+        this.props.activeModifierIds.forEach( (activeModifierId) => {
             if (ModifierDefinitions[activeModifierId].ships.includes(this.shipName)) {
-                this.totalModifier += ModifierDefinitions[activeModifierId].modifier;
+                this.totalModifier += ModifierDefinitions[activeModifierId].value;
             }
         });
 
         return (
-            <li>
-                <h3><u>{this.friendlyName + "s"}</u></h3>
-                <h6>(Target: {this.target})</h6>
-                <ul style={{listStyleType:"none", padding:"0"}}>
-                    {this.createRollResults()}
-                </ul>
-            </li>
+            <div className="row">
+                <table style={{width: "auto"}} className="table table-bordered table-sm">
+                    <tbody>
+                        <tr>
+                            <td colSpan="4">
+                                <h3><u>{this.friendlyName + "s"}</u></h3>
+                                <h6>(Target: {this.target})</h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col">Roll</th>
+                            <th scope="col">Modifier</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Result</th>
+                        </tr>
+                        {this.createRollResults()}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }

@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 
 class RollResult extends Component {
     target = this.props.target;
@@ -11,14 +11,28 @@ class RollResult extends Component {
     render() {
         this.result = this.result > 10 ? 10 : this.result;
         this.result = this.result < 1 ? 1 : this.result;
+        let modifierColor = "black";
+            if (this.totalModifier > 0) {
+                modifierColor = "green"
+            } else if (this.totalModifier < 0) {
+                modifierColor = "red"
+            }
 
         return (
-            <Fragment>
-                <li>Roll: ({this.dieRoll})
-                    Modifier: ({this.totalModifier > 0 ? "+" : ""}{this.totalModifier})
-                    Total: ({this.result})
-                    Result: {[this.hit ? "HIT" : "MISS"]}</li>
-            </Fragment>
+                <tr>
+                    <td>
+                        {this.dieRoll}
+                    </td>
+                    <td>
+                        <span style={{color: modifierColor}}>{this.totalModifier > 0 ? "+" : ""}{this.totalModifier}</span>
+                    </td>
+                    <td>
+                        {this.result}
+                    </td>
+                    <td>
+                        <b><span style={{color: this.hit ? "green" : "red"}}>{[this.hit ? "HIT" : "MISS"]}</span></b>
+                    </td>
+                </tr>
         );
     }
 }

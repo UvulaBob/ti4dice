@@ -61,7 +61,7 @@ class App extends Component {
 
         const modifierCheckboxes = [];
         for (let modifierId in ModifierDefinitions) {
-            modifierCheckboxes.push(<ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} modifierId={modifierId}/>);
+            modifierCheckboxes.push(<ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} id={modifierId}/>);
         }
 
         return (
@@ -77,7 +77,7 @@ class App extends Component {
                                 <h1><u>Fleet</u></h1>
                             </div>
                             <div className="row">
-                                <table style={{width: "auto"}} className="table table-bordered table-sm">
+                                <table style={{width: "auto"}} className="table table-borderless table-sm">
                                     <tbody>
                                         {shipButtons}
                                     </tbody>
@@ -88,19 +88,17 @@ class App extends Component {
                             <div className="row">
                                 <h1><u>Results</u></h1>
                             </div>
-                            <div className="row">
-                                <ul style={{listStyleType:"none", margin:"0", padding:"0"}}>
-                                    {resultItems}
-                                </ul>
-                            </div>
+                            {resultItems}
                         </div>
                         <div className="col border">
                             <div className="row">
                                 <h1><u>Modifiers</u></h1>
                             </div>
-                            <ul style={{listStyleType:"none", margin:"0", padding:"0"}}>
-                                {modifierCheckboxes}
-                            </ul>
+                            <table style={{width: "auto"}} className="table table-borderless table-sm">
+                                <tbody>
+                                  {modifierCheckboxes}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div className="row justify-content-center">
