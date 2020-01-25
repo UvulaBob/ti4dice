@@ -67,7 +67,7 @@ class App extends Component {
 
         const fleetItems = [];
         for (let shipType in this.state.fleet) {
-            fleetItems.push(<FleetItem key={shipType} ship={ShipDefinitions[shipType]} shipCount={this.state.fleet.carrier.length}/>);
+            fleetItems.push(<FleetItem key={shipType} ship={ShipDefinitions[shipType]} shipCount={this.state.fleet[shipType].length}/>);
         }
 
         return (

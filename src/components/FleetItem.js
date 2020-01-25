@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 
 class FleetItem extends Component {
+    ship = this.props.ship;
     render() {
         return (
             <Fragment>
