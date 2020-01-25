@@ -7,16 +7,16 @@ class RollResult extends Component {
     result = this.dieRoll + this.totalModifier;
     hit = this.result >= this.target;
 
-
     render() {
         this.result = this.result > 10 ? 10 : this.result;
         this.result = this.result < 1 ? 1 : this.result;
         let modifierColor = "black";
-            if (this.totalModifier > 0) {
-                modifierColor = "green"
-            } else if (this.totalModifier < 0) {
-                modifierColor = "red"
-            }
+
+        if (this.totalModifier > 0) {
+            modifierColor = "green"
+        } else if (this.totalModifier < 0) {
+            modifierColor = "red"
+        }
 
         return (
                 <tr>

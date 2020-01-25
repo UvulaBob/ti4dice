@@ -9,7 +9,9 @@ class ShipButton extends Component {
         return (
             <tr>
                 <td>
-                    <button type="button" disabled={this.props.disabled} className="btn align-middle btn-light" name={this.shipName} onClick={this.props.onClick}>
+                    <button type="button" disabled={this.props.disabled} className="btn align-middle"
+                            style={{backgroundColor:"lightgray", borderColor:"darkgray"}}
+                            name={this.shipName} onClick={this.props.onClick}>
                         {this.friendlyName}
                     </button>
                 </td>

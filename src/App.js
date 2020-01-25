@@ -22,7 +22,7 @@ class App extends Component {
 
     handleModifierCheckboxChange = (e) => {
         if (this.activeModifierIds.includes(e.target.id)) {
-            this.activeModifierIds = this.activeModifierIds.filter((activeModifier) => { return activeModifier !== e.target.id});
+            this.activeModifierIds.splice(this.activeModifierIds.indexOf(e.target.id), 1);
         } else {
             this.activeModifierIds.push(e.target.id);
         }
@@ -30,13 +30,12 @@ class App extends Component {
 
 
     handleShipButtonClick = (e) => {
-        if (this.state.combatStarted) {
-            return;
+        if (!this.state.combatStarted) {
+            const shipName = e.target.name;
+            const newState = Object.assign({}, this.state);
+            newState.fleet[shipName].push(ShipDefinitions[shipName]);
+            this.setState(newState);
         }
-        const shipName = e.target.name;
-        const newState = Object.assign({}, this.state);
-        newState.fleet[shipName].push(ShipDefinitions[shipName]);
-        this.setState(newState);
     };
 
     handleRollDiceButtonClick = () => {
@@ -44,25 +43,25 @@ class App extends Component {
     };
 
     render() {
-        const resultItems = [];
+        let resultItems = [];
+
         if (this.state.combatStarted) {
-            for (let shipType in this.state.fleet) {
+            resultItems = Object.keys(this.state.fleet).filter((shipType) => {
+                return this.state.fleet[shipType].length > 0;
+            }).map((shipType) => {
                 const shipCount = this.state.fleet[shipType].length;
-                if (shipCount > 0) {
-                    resultItems.push(<ResultItem key={resultItems.length - 1}  activeModifierIds={this.activeModifierIds} ship={ShipDefinitions[shipType]} shipCount={shipCount} />);
-                }
-            }
+                return <ResultItem key={shipType} activeModifierIds={this.activeModifierIds}
+                                   ship={ShipDefinitions[shipType]} shipCount={shipCount}/>
+            })
         }
 
-        const shipButtons = [];
-        for (let shipType in this.state.fleet) {
-            shipButtons.push(<ShipButton key={shipType} shipCount={this.state.fleet[shipType].length} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
-        }
+        const shipButtons = Object.keys(this.state.fleet).map((shipType) =>
+            <ShipButton key={shipType} shipCount={this.state.fleet[shipType].length} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />
+        );
 
-        const modifierCheckboxes = [];
-        for (let modifierId in ModifierDefinitions) {
-            modifierCheckboxes.push(<ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} id={modifierId}/>);
-        }
+        const modifierCheckboxes = Object.keys(ModifierDefinitions).map((modifierId =>
+            <ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} id={modifierId}/>)
+        );
 
         return (
             <div className="App">

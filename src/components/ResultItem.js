@@ -12,15 +12,17 @@ class ResultItem extends Component {
 
     createRollResults() {
         const rollResults = [];
-        for (let i = this.shipCount; i > 0; i-- ) {
-            for (let j = this.numberOfDice; j > 0; j--) {
-                rollResults.push(<RollResult totalModifier={this.totalModifier} key={rollResults.length - 1} target={this.target} />)
+        for (let i = 1; i <= this.shipCount; i++) {
+            for (let j = 1; j <= this.numberOfDice; j++) {
+                rollResults.push(<RollResult totalModifier={this.totalModifier} key={`${this.shipName}_${i}_die_${j}`} target={this.target} />)
             }
         }
+
         return rollResults;
-    }
+    };
 
     render() {
+
         this.props.activeModifierIds.forEach( (activeModifierId) => {
             if (ModifierDefinitions[activeModifierId].ships.includes(this.shipName)) {
                 this.totalModifier += ModifierDefinitions[activeModifierId].value;
