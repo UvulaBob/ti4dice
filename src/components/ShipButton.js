@@ -1,16 +1,22 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component } from 'react';
 
 class ShipButton extends Component {
     shipName = this.props.ship.name;
     friendlyName = this.props.ship.friendlyName;
 
     render() {
+        const shipCount = this.props.shipCount;
         return (
-            <Fragment>
-                <button type="button" disabled={this.props.disabled} className="btn btn-light border shipSelectionButton" name={this.shipName} onClick={this.props.onClick}>
-                    {this.friendlyName}
-                </button>
-            </Fragment>
+            <tr>
+                <td>
+                    <button type="button" disabled={this.props.disabled} className="btn align-middle btn-light" name={this.shipName} onClick={this.props.onClick}>
+                        {this.friendlyName}
+                    </button>
+                </td>
+                <td className="align-middle">
+                    {shipCount}
+                </td>
+            </tr>
         );
     }
 }

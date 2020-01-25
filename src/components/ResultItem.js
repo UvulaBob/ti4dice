@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import RollResult from "./RollResult";
 import ModifierDefinitions from "../lib/ModifierDefinitions";
 
@@ -29,13 +29,13 @@ class ResultItem extends Component {
         });
 
         return (
-            <Fragment>
-                    <h3><u>{this.friendlyName + "s"}</u></h3>
-                    <h6>(Target: {this.target})</h6>
-                    <ul style={{listStyleType:"none", padding:"0"}}>
-                        {this.createRollResults()}
-                    </ul>
-            </Fragment>
+            <li>
+                <h3><u>{this.friendlyName + "s"}</u></h3>
+                <h6>(Target: {this.target})</h6>
+                <ul style={{listStyleType:"none", padding:"0"}}>
+                    {this.createRollResults()}
+                </ul>
+            </li>
         );
     }
 }

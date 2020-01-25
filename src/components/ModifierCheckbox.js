@@ -9,14 +9,14 @@ class ModifierCheckbox extends Component {
 
     render() {
         return (
-            <div className="row">
+            <li>
                 <div className="form-check">
                     <input onChange={this.props.onChange} type="checkbox" className="form-check-input" id={this.id} />
                     <label className="form-check-label" htmlFor={this.id}>
                         {this.friendlyName}  <b><span style={{color: this.color}}>({this.modifierValue})</span></b>
                     </label>
                 </div>
-            </div>
+            </li>
         );
     }
 }

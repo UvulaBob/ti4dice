@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ShipButton from './components/ShipButton';
-import FleetItem from './components/FleetItem';
 import ResultItem from './components/ResultItem';
 import ShipDefinitions from './lib/ShipDefinitions';
 import ModifierCheckbox from './components/ModifierCheckbox';
@@ -57,17 +56,12 @@ class App extends Component {
 
         const shipButtons = [];
         for (let shipType in this.state.fleet) {
-            shipButtons.push(<ShipButton key={shipType} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
+            shipButtons.push(<ShipButton key={shipType} shipCount={this.state.fleet[shipType].length} disabled={this.state.combatStarted} onClick={this.handleShipButtonClick} ship={ShipDefinitions[shipType]} />);
         }
 
         const modifierCheckboxes = [];
         for (let modifierId in ModifierDefinitions) {
             modifierCheckboxes.push(<ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} modifierId={modifierId}/>);
-        }
-
-        const fleetItems = [];
-        for (let shipType in this.state.fleet) {
-            fleetItems.push(<FleetItem key={shipType} ship={ShipDefinitions[shipType]} shipCount={this.state.fleet[shipType].length}/>);
         }
 
         return (
@@ -83,12 +77,11 @@ class App extends Component {
                                 <h1><u>Fleet</u></h1>
                             </div>
                             <div className="row">
-                                {shipButtons}
-                            </div>
-                            <div className="row">
-                                <ul style={{listStyleType:"none", margin:"0", padding:"0"}}>
-                                    {fleetItems}
-                                </ul>
+                                <table style={{width: "auto"}} className="table table-bordered table-sm">
+                                    <tbody>
+                                        {shipButtons}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div className="col border">
@@ -105,7 +98,9 @@ class App extends Component {
                             <div className="row">
                                 <h1><u>Modifiers</u></h1>
                             </div>
-                            {modifierCheckboxes}
+                            <ul style={{listStyleType:"none", margin:"0", padding:"0"}}>
+                                {modifierCheckboxes}
+                            </ul>
                         </div>
                     </div>
                     <div className="row justify-content-center">
