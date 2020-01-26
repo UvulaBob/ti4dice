@@ -12,7 +12,7 @@ class ModifierCheckbox extends Component {
             <tr>
                 <td>
                     <div className="form-check">
-                        <input onChange={this.props.onChange} type="checkbox" className="form-check-input" id={this.modifier.name} />
+                        <input disabled={this.props.disabled} onChange={this.props.onChange} type="checkbox" className="form-check-input" id={this.modifier.name} />
                         <label className="form-check-label" htmlFor={this.id}>
                             {this.friendlyName}
                         </label>

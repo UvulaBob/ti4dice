@@ -57,7 +57,7 @@ class App extends Component {
         );
 
         const modifierCheckboxes = Object.keys(ModifierDefinitions).map((modifierId =>
-            <ModifierCheckbox key={modifierId} onChange={this.handleModifierCheckboxChange} id={modifierId}/>)
+            <ModifierCheckbox key={modifierId} disabled={this.state.combatStarted} onChange={this.handleModifierCheckboxChange} id={modifierId}/>)
         );
 
         return (
@@ -90,11 +90,13 @@ class App extends Component {
                             <div className="row">
                                 <h1><u>Modifiers</u></h1>
                             </div>
-                            <table style={{width: "auto"}} className="table table-borderless table-sm">
-                                <tbody>
-                                  {modifierCheckboxes}
-                                </tbody>
-                            </table>
+                            <div className="row">
+                                <table style={{width: "auto"}} className="table table-borderless table-sm">
+                                    <tbody>
+                                      {modifierCheckboxes}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div className="row justify-content-center">
