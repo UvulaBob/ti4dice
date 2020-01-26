@@ -41,6 +41,13 @@ const App = () => {
         setCombatStarted(true);
     };
 
+    const shipButtons = Object.keys(fleet).map((shipId) =>
+        <ShipButton key={shipId} shipCount={fleet[shipId].length} disabled={combatStarted} onClick={handleShipButtonClick} ship={ShipDefinitions[shipId]} />
+    );
+
+    const modifierCheckboxes = Object.keys(ModifierDefinitions).map((modifierId =>
+        <ModifierCheckbox key={modifierId} modifier={ModifierDefinitions[modifierId]} disabled={combatStarted} onChange={handleModifierCheckboxChange} />)
+    );
 
     let resultItems = [];
     if (combatStarted) {
@@ -51,14 +58,6 @@ const App = () => {
                                ship={ShipDefinitions[shipType]} shipCount={fleet[shipType].length}/>
         })
     }
-
-    const shipButtons = Object.keys(fleet).map((shipId) =>
-        <ShipButton key={shipId} shipCount={fleet[shipId].length} disabled={combatStarted} onClick={handleShipButtonClick} ship={ShipDefinitions[shipId]} />
-    );
-
-    const modifierCheckboxes = Object.keys(ModifierDefinitions).map((modifierId =>
-        <ModifierCheckbox key={modifierId} disabled={combatStarted} onChange={handleModifierCheckboxChange} id={modifierId}/>)
-    );
 
     return (
         <div className="App">

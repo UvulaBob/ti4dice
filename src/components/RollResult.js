@@ -1,13 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const RollResult = (props) => {
-    const {dieRoll, totalModifier, finalResult, hit} = props.results;
+const RollResult = ({dieRoll, totalModifier, finalResult, hit}) => {
 
     let modifierTextColor = "black";
     modifierTextColor = totalModifier > 0 ? "green" : modifierTextColor;
     modifierTextColor = totalModifier < 0 ? "red" : modifierTextColor;
-
-    let resultTextColor = hit ? "green" : "red";
 
     return (
             <tr>
@@ -15,16 +13,23 @@ const RollResult = (props) => {
                     {dieRoll}
                 </td>
                 <td>
-                    <span style={{color: modifierTextColor}}>{totalModifier > 0 ? "+" : ""}{totalModifier}</span>
+                    <span style={{color: modifierTextColor}}>{totalModifier > 0 ? "+" : "-"}{Math.abs(totalModifier)}</span>
                 </td>
                 <td>
                     {finalResult}
                 </td>
                 <td>
-                    <b><span style={{color: resultTextColor}}>{[hit ? "HIT" : "MISS"]}</span></b>
+                    <b><span style={{color: hit ? "green" : "red"}}>{[hit ? "HIT" : "MISS"]}</span></b>
                 </td>
             </tr>
     );
+};
+
+RollResult.propTypes = {
+    dieRoll: PropTypes.number.isRequired,
+    totalModifier: PropTypes.number.isRequired,
+    finalResult: PropTypes.number.isRequired,
+    hit: PropTypes.bool.isRequired
 };
 
 export default RollResult;

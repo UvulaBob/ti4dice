@@ -1,32 +1,29 @@
 import React from 'react';
 import RollResult from "./RollResult";
 import ModifierDefinitions from "../lib/ModifierDefinitions";
+import PropTypes from 'prop-types';
 
-const ResultItem = (props) => {
-    const shipName = props.ship.name;
-    const shipId = props.ship.id;
-    const target = props.ship.target;
-    const shipCount = props.shipCount;
-    const numberOfDice = props.ship.numberOfDice;
+const ResultItem = ({ship, shipCount, activeModifierIds}) => {
+
     let totalModifier = 0;
     let hits = 0;
 
-    props.activeModifierIds.forEach((activeModifierId) => {
-        if (ModifierDefinitions[activeModifierId].ships.includes(shipId)) {
+    activeModifierIds.forEach((activeModifierId) => {
+        if (ModifierDefinitions[activeModifierId].ships.includes(ship.id)) {
             totalModifier += ModifierDefinitions[activeModifierId].value;
         }
     });
 
     const rollResults = [];
     for (let i = 1; i <= shipCount; i++) {
-        for (let j = 1; j <= numberOfDice; j++) {
+        for (let j = 1; j <= ship.numberOfDice; j++) {
             const dieRoll =  Math.trunc((Math.random() * 10) + 1);
             let finalResult = dieRoll + totalModifier;
             finalResult = Math.min(10, finalResult);
             finalResult = Math.max(1, finalResult);
-            const hit = finalResult >= target;
+            const hit = finalResult >= ship.target;
             hits += hit ? 1 : 0;
-            rollResults.push(<RollResult results={{dieRoll, totalModifier, finalResult, hit, hits}} key={`${shipId}_${i}_die_${j}`} />)
+            rollResults.push(<RollResult dieRoll={dieRoll} finalResult={finalResult} hit={hit} totalModifier={totalModifier} key={`${ship.id}_${i}_die_${j}`} />)
         }
     }
 
@@ -36,8 +33,8 @@ const ResultItem = (props) => {
                 <tbody>
                     <tr>
                         <td colSpan="4">
-                            <h3><u>{shipName + "s"}</u></h3>
-                            <h6>(Target: {target})</h6>
+                            <h3><u>{ship.name + "s"}</u></h3>
+                            <h6>(Target: {ship.target})</h6>
                         </td>
                     </tr>
                     <tr>
@@ -61,4 +58,14 @@ const ResultItem = (props) => {
     );
 };
 
+ResultItem.propTypes = {
+    ship: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+        target: PropTypes.number.isRequired,
+        numberOfDice: PropTypes.number.isRequired,
+    }),
+    shipCount: PropTypes.number.isRequired,
+    activeModifierIds: PropTypes.array.isRequired
+};
 export default ResultItem;
