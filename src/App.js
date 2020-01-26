@@ -29,12 +29,10 @@ class App extends Component {
     };
 
     handleShipButtonClick = (e) => {
-        if (!this.state.combatStarted) {
             const shipName = e.target.name;
             const newState = Object.assign({}, this.state);
             newState.fleet[shipName].push(ShipDefinitions[shipName]);
             this.setState(newState);
-        }
     };
 
     handleRollDiceButtonClick = () => {
