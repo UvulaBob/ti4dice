@@ -9,20 +9,27 @@ class ResultItem extends Component {
     shipCount = this.props.shipCount;
     numberOfDice = this.props.ship.numberOfDice;
     totalModifier = 0;
+    childHits = 0;
 
-    createRollResults() {
+    state = { totalHits: 0};
+
+    createRollResults = () => {
         const rollResults = [];
         for (let i = 1; i <= this.shipCount; i++) {
             for (let j = 1; j <= this.numberOfDice; j++) {
-                rollResults.push(<RollResult totalModifier={this.totalModifier} key={`${this.shipName}_${i}_die_${j}`} target={this.target} />)
+                rollResults.push(<RollResult onHit={() => this.childHits++} totalModifier={this.totalModifier} key={`${this.shipName}_${i}_die_${j}`} target={this.target} />)
             }
         }
 
         return rollResults;
+
+    };
+
+    componentDidMount = () => {
+        this.setState({hits: this.childHits});
     };
 
     render() {
-
         this.props.activeModifierIds.forEach( (activeModifierId) => {
             if (ModifierDefinitions[activeModifierId].ships.includes(this.shipName)) {
                 this.totalModifier += ModifierDefinitions[activeModifierId].value;
@@ -41,11 +48,19 @@ class ResultItem extends Component {
                         </tr>
                         <tr>
                             <th scope="col">Roll</th>
-                            <th scope="col">Modifier</th>
+                            <th scope="col">Mod</th>
                             <th scope="col">Total</th>
                             <th scope="col">Result</th>
                         </tr>
                         {this.createRollResults()}
+                        <tr>
+                            <td colSpan={"3"}>
+                                <h3>Hits:</h3>
+                            </td>
+                            <td>
+                                <h3>{this.state.hits}</h3>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

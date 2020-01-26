@@ -28,7 +28,6 @@ class App extends Component {
         }
     };
 
-
     handleShipButtonClick = (e) => {
         if (!this.state.combatStarted) {
             const shipName = e.target.name;

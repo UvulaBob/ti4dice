@@ -7,6 +7,10 @@ class RollResult extends Component {
     result = this.dieRoll + this.totalModifier;
     hit = this.result >= this.target;
 
+    announce = () => {
+      console.log("childItem here!")
+    };
+
     render() {
         this.result = this.result > 10 ? 10 : this.result;
         this.result = this.result < 1 ? 1 : this.result;
@@ -16,6 +20,10 @@ class RollResult extends Component {
             modifierColor = "green"
         } else if (this.totalModifier < 0) {
             modifierColor = "red"
+        }
+
+        if (this.hit) {
+            this.props.onHit();
         }
 
         return (
