@@ -14,3 +14,6 @@ Why This Exists
 -
 Someone once told me that rather than think of uses for technology, they think of something they want to do, and apply technology to it. I'm not quite there, but I needed to learn React, so here we are. 
 
+Where It Lives
+-
+You can find it here: https://nifty-clarke-90b571.netlify.com/
