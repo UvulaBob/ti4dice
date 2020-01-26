@@ -1,47 +1,30 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class RollResult extends Component {
-    target = this.props.target;
-    totalModifier = this.props.totalModifier;
-    dieRoll =  Math.trunc((Math.random() * 10) + 1);
-    result = this.dieRoll + this.totalModifier;
-    hit = this.result >= this.target;
+const RollResult = (props) => {
+    const {dieRoll, totalModifier, finalResult, hit} = props.results;
 
-    announce = () => {
-      console.log("childItem here!")
-    };
+    let modifierTextColor = "black";
+    modifierTextColor = totalModifier > 0 ? "green" : modifierTextColor;
+    modifierTextColor = totalModifier < 0 ? "red" : modifierTextColor;
 
-    render() {
-        this.result = this.result > 10 ? 10 : this.result;
-        this.result = this.result < 1 ? 1 : this.result;
-        let modifierColor = "black";
+    let resultTextColor = hit ? "green" : "red";
 
-        if (this.totalModifier > 0) {
-            modifierColor = "green"
-        } else if (this.totalModifier < 0) {
-            modifierColor = "red"
-        }
+    return (
+            <tr>
+                <td>
+                    {dieRoll}
+                </td>
+                <td>
+                    <span style={{color: modifierTextColor}}>{totalModifier > 0 ? "+" : ""}{totalModifier}</span>
+                </td>
+                <td>
+                    {finalResult}
+                </td>
+                <td>
+                    <b><span style={{color: resultTextColor}}>{[hit ? "HIT" : "MISS"]}</span></b>
+                </td>
+            </tr>
+    );
+};
 
-        if (this.hit) {
-            this.props.onHit();
-        }
-
-        return (
-                <tr>
-                    <td>
-                        {this.dieRoll}
-                    </td>
-                    <td>
-                        <span style={{color: modifierColor}}>{this.totalModifier > 0 ? "+" : ""}{this.totalModifier}</span>
-                    </td>
-                    <td>
-                        {this.result}
-                    </td>
-                    <td>
-                        <b><span style={{color: this.hit ? "green" : "red"}}>{[this.hit ? "HIT" : "MISS"]}</span></b>
-                    </td>
-                </tr>
-        );
-    }
-}
 export default RollResult;

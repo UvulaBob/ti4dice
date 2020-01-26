@@ -1,26 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class ShipButton extends Component {
-    shipName = this.props.ship.name;
-    friendlyName = this.props.ship.friendlyName;
+const ShipButton = (props) => {
+    const{id, name} = props.ship;
+    const {shipCount, onClick, disabled} = props;
 
-    render() {
-        const shipCount = this.props.shipCount;
-        return (
-            <tr>
-                <td>
-                    <button type="button" disabled={this.props.disabled} className="btn align-middle"
-                            style={{backgroundColor:"lightgray", borderColor:"darkgray"}}
-                            name={this.shipName} onClick={this.props.onClick}>
-                        {this.friendlyName}
-                    </button>
-                </td>
-                <td className="align-middle">
-                    {shipCount}
-                </td>
-            </tr>
-        );
-    }
-}
+    return (
+        <tr>
+            <td>
+                <button type="button" disabled={disabled} className="btn align-middle"
+                        style={{backgroundColor:"lightgray", borderColor:"darkgray"}}
+                        id={id} onClick={onClick}>
+                    {name}
+                </button>
+            </td>
+            <td className="align-middle">
+                {shipCount}
+            </td>
+        </tr>
+    );
+};
 
 export default ShipButton;
