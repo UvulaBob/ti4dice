@@ -28,32 +28,32 @@ const ResultItem = ({ship, shipCount, activeModifierIds}) => {
     }
 
     return (
-        <div className="row">
-            <table style={{width: "auto"}} className="table table-bordered table-sm">
-                <tbody>
-                    <tr>
-                        <td colSpan="4">
-                            <h3><u>{ship.name + "s"}</u></h3>
-                            <h6>(Target: {ship.target})</h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="col">Roll</th>
-                        <th scope="col">Mod</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Result</th>
-                    </tr>
-                    {rollResults}
-                    <tr>
-                        <td colSpan={"3"}>
-                            <h3>Hits:</h3>
-                        </td>
-                        <td>
-                            <h3>{hits}</h3>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div className="row row-cols-1">
+            <div class="col mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><u>{ship.name + "s"}</u></h5>
+                        <p class="card-text">(Target: {ship.target})</p>
+                        <p class="card-text"><strong>Hits:</strong> {hits}</p>
+                        <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target={"#result-" + ship.name} aria-expanded="false" aria-controls={"result-" + ship.name}>
+                            Show details
+                        </button>
+                        <div class="collapse" id={"result-" + ship.name}>
+                            <table style={{width: "auto"}} className="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">Roll</th>
+                                        <th scope="col">Mod</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Result</th>
+                                    </tr>
+                                    {rollResults}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
